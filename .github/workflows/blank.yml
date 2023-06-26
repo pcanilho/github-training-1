@@ -1,0 +1,27 @@
+name: GitHub Actions Demo
+on:
+  push:
+    paths-ignore: .github
+    branches: main
+  pull_request_target:
+    branches: main
+  schedule:
+    - cron: 15 6 * * SUN
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: true
+        default: 'warning'
+  
+jobs:
+  build:
+   runs-on: ubuntu-latest
+   name: Build
+   
+   steps:
+     - run: echo "${{ github.event_name }}"
+     - uses: actions/checkout@v3
+     - run: |
+         echo "${{ github.repository }}"
+         ls -R
