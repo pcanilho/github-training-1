@@ -1,0 +1,8 @@
+name: Reuse other workflow
+on: [workflow_run]
+jobs:
+  call-workflow:
+    with:
+      who-to-greet: paulo
+    uses: ./.github/workflows/reusable.yml
+    
