@@ -10,14 +10,14 @@ on:
     - cron: 15 6 * * SUN
   workflow_dispatch:
     inputs:
-      logLevel:
-        description: 'Log level'     
+      environment:
+        description: 'Environment type'     
         required: true
-        default: 'warning'
+        default: 'Test'
   
 jobs:
   build:
-   runs-on: ubuntu-latest
+   runs-on: &runner ubuntu-latest 
    name: Build
    
    steps:
@@ -26,3 +26,29 @@ jobs:
      - run: |
          echo "${{ github.repository }}"
          ls -R
+         
+  test:
+    if: github.event_name == "workflow_dispatch"
+    environment: Test
+    needs: build
+    runs-on: *runner
+    steps:
+      - run: echo "Testing..."
+  load-test:
+    if: github.event_name == "workflow_dispatch"
+    environment:  Load-Test
+    needs: build
+    runs-on: *runner
+    steps:
+      - run: echo "Testing..."
+      - run: sleep 15
+  production:
+    if: inputs.environment == "Production"
+    needs: [test, load-test]
+    runs-on: *runner
+    environment:
+      name: Production
+      url: "https://writeabout.net"
+    steps:
+      - run: |
+          for i in [1..5]; do echo "Step $i deploying for URL ${{ environment.url }}..." && sleep 10; done
