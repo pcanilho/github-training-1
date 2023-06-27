@@ -53,4 +53,4 @@ jobs:
       url: "https://writeabout.net"
 
     steps:
-      - run: for i in [1..5]; do echo "Step $i deploying for URL ${{ environment.url }}..." && sleep 10; done
+      - run: for i in [1..5]; do echo "Step $i deploying for URL ${{ github.environment.url }}..." && sleep 10; done
