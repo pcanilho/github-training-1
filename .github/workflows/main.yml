@@ -53,4 +53,5 @@ jobs:
       url: "https://writeabout.net"
 
     steps:
-      - run: for i in [1..5]; do echo "Step $i deploying for URL ${{ jobs.production.environment.url }}..." && sleep 10; done
+      # - run: for i in [1..5]; do echo "Step $i deploying for URL ${{ production.environment.url }}..." && sleep 10; done
+      - run: for i in [1..5]; do echo "Step $i deploying for URL..." && sleep 10; done
