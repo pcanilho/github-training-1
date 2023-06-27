@@ -17,7 +17,7 @@ on:
   
 jobs:
   build:
-   runs-on: &runner ubuntu-latest 
+   runs-on: ubuntu-latest
    name: Build
    
    steps:
@@ -31,24 +31,27 @@ jobs:
     if: github.event_name == "workflow_dispatch"
     environment: Test
     needs: build
-    runs-on: *runner
+    runs-on: ubuntu-latest
+    
     steps:
       - run: echo "Testing..."
   load-test:
     if: github.event_name == "workflow_dispatch"
     environment:  Load-Test
     needs: build
-    runs-on: *runner
+    runs-on: ubuntu-latest
+
     steps:
       - run: echo "Testing..."
       - run: sleep 15
   production:
     if: inputs.environment == "Production"
     needs: [test, load-test]
-    runs-on: *runner
+    runs-on: ubuntu-latest
     environment:
       name: Production
       url: "https://writeabout.net"
+
     steps:
       - run: |
           for i in [1..5]; do echo "Step $i deploying for URL ${{ environment.url }}..." && sleep 10; done
