@@ -19,5 +19,5 @@ jobs:
       - run: echo "time=$(date)" >> $GITHUB_OUTPUT
         id: time
     outputs:
-      current-time: ${{ steps.time.ouputs.time }}
+      current-time: ${{ steps.time.outputs.time }}
         
